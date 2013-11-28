@@ -1,0 +1,12 @@
+src/opencl_cppa.cpp
+src/opencl_native.cpp
+include/kernel.hpp
+include/util.hpp
+src/util.cpp
+include/cmd.hpp
+src/cmd.cpp
+src/cpu_matrix.cpp
+src/spawn_time.cpp
+src/copy_ops_small.cpp
+src/copy_ops_big.cpp
+src/spawn_time_core.cpp
