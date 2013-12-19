@@ -107,13 +107,13 @@ mean=$(arith_mean); count=$?   # Two returns from function!
 std_dev=$(sd $mean $count)
 median=$(stat_median $1)
 
-#echo
-#echo "Number of data points in \""$datafile"\" = $count"
-#echo "Arithmetic mean (average) = $mean"
-#echo "Standard Deviation = $std_dev"
-#echo "Median number (middle) = $median"
-#echo
-echo "$mean, $std_dev"
+echo
+echo "Number of data points in \""$datafile"\" = $count"
+echo "Arithmetic mean (average) = $mean"
+echo "Standard Deviation = $std_dev"
+echo "Median number (middle) = $median"
+echo
+#echo "$mean, $std_dev"
 # ======================================================= #
 
 exit

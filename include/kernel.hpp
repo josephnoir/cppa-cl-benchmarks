@@ -40,7 +40,6 @@ constexpr const char* kernel_source = R"__(
 
     __kernel void l_dim_1(__global float* input,
                          __global float* output) {
-        size_t g_size = get_global_size(0);
         size_t l_size = get_local_size(0);
         size_t l_id = get_local_id(0);
         size_t pos = get_global_id(0);

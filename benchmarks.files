@@ -1,11 +1,11 @@
-src/opencl_cppa.cpp
-src/opencl_native.cpp
+src/matrix_cppa_cl.cpp
+src/matrix_native_cl.cpp
 include/kernel.hpp
 include/util.hpp
 src/util.cpp
 include/cmd.hpp
 src/cmd.cpp
-src/cpu_matrix.cpp
+src/matrix_cpu.cpp
 src/spawn_time.cpp
 src/copy_ops_small.cpp
 src/copy_ops_big.cpp

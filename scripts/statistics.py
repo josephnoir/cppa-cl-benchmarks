@@ -26,8 +26,10 @@ def eval():
 
 def main():
     parser = OptionParser(usage="usage: %prog [options] file", version="%prog 0.1")
-    #parser.add_option("-t", "--template", action="store", type="string", dest="template", help="declare output format")
-    parser.add_option("-s", "--separator", action="store", type="string", dest="separator", help="seperator in the output file [defualt = ' ']", default=' ')
+    # parser.add_option("-t", "--template", action="store", type="string", dest="template",
+    #                   help="declare output format")
+    parser.add_option("-s", "--separator", action="store", type="string", dest="separator",
+                      help="seperator in the output file [defualt = ' ']", default=' ')
 
     (options, args) = parser.parse_args()
     if len(args) != 1:
@@ -48,7 +50,7 @@ def main():
     var  = data.var()
     sdev = data.std()
     delta = confidence_interval(data)
-
+    
     # pandas
     '''
     mean = df.mean()

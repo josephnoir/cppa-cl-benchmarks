@@ -96,14 +96,14 @@ INCLUDE_DIRECTORIES(. include ${CMAKE_BINARY_DIR} ${CPPA_INCLUDE} ${OPENCL_INCLU
 # target_link_libraries(benchmarks ${CMAKE_DL_LIBS} ${CPPA_LIBRARY} ${OPENCL_LIBRARIES})
 # add_dependencies(benchmarks all_examples)
 
-add_executable(opencl_cppa src/opencl_cppa.cpp src/util.cpp)
-target_link_libraries(opencl_cppa ${CMAKE_DL_LIBS} ${CPPA_LIBRARY} ${OPENCL_LIBRARIES})
+add_executable(matrix_cppa_cl src/matrix_cppa_cl.cpp src/util.cpp)
+target_link_libraries(matrix_cppa_cl ${CMAKE_DL_LIBS} ${CPPA_LIBRARY} ${OPENCL_LIBRARIES})
 
-add_executable(opencl_native src/opencl_native.cpp src/util.cpp src/cmd.cpp)
-target_link_libraries(opencl_native ${CMAKE_DL_LIBS} ${CPPA_LIBRARY} ${OPENCL_LIBRARIES})
+add_executable(matrix_native_cl src/matrix_native_cl.cpp src/util.cpp src/cmd.cpp)
+target_link_libraries(matrix_native_cl ${CMAKE_DL_LIBS} ${CPPA_LIBRARY} ${OPENCL_LIBRARIES})
 
-add_executable(cpu_matrix src/cpu_matrix.cpp)
-target_link_libraries(cpu_matrix ${CMAKE_DL_LIBS} ${CPPA_LIBRARY} ${OPENCL_LIBRARIES})
+add_executable(matrix_cpu src/matrix_cpu.cpp)
+target_link_libraries(matrix_cpu ${CMAKE_DL_LIBS} ${CPPA_LIBRARY} ${OPENCL_LIBRARIES})
 
 add_executable(spawn_time src/spawn_time.cpp)
 target_link_libraries(spawn_time ${CMAKE_DL_LIBS} ${CPPA_LIBRARY} ${OPENCL_LIBRARIES})
