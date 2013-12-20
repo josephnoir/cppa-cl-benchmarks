@@ -113,24 +113,28 @@ matrix_type create_matrix(size_t size) {
 int main(int argc, char** argv) {
     announce<vector<float>>();
 
-    if (argc < 3 || string(argv[1]) != "-s") {
+    if (argc != 5 || string(argv[1]) != "-i" || string(argv[3]) != "-s") {
         cout << "usage: ./" << argv[0]
-             << " -s <matrix size>" << endl;
+             << " -i <iterations>"
+                " -s <matrix size>" << endl;
         return 0;
     }
-    auto matrix_size = static_cast<size_t>(stoi(argv[2]));
 
-    matrix_type m1 = create_matrix(matrix_size);
-    matrix_type m2 = create_matrix(matrix_size);
+    auto iterations  = static_cast<size_t>(stoi(argv[2]));
+    auto matrix_size = static_cast<size_t>(stoi(argv[4]));
 
-    matrix_type matrix = actor_multiply2(m1, m2, matrix_size);
+    for (size_t i = 0; i < iterations; ++i) {
+        matrix_type m1 = create_matrix(matrix_size);
+        matrix_type m2 = create_matrix(matrix_size);
 
-//    for (size_t column = 0; column < matrix_size; ++column) {
-//        for (size_t row = 0; row < matrix_size; ++row) {
-//            cout << fixed << setprecision(2) << setw(9)
-//                 << matrix[row + column * matrix_size];
+        matrix_type matrix = actor_multiply2(m1, m2, matrix_size);
+//        for (size_t column = 0; column < matrix_size; ++column) {
+//            for (size_t row = 0; row < matrix_size; ++row) {
+//                cout << fixed << setprecision(2) << setw(9)
+//                     << matrix[row + column * matrix_size];
+//            }
+//            cout << endl;
 //        }
-//        cout << endl;
-//    }
+    }
 
 }
