@@ -3,6 +3,7 @@
 import math
 
 from optparse import OptionParser
+
 import pandas as pd
 import numpy as np
 import scipy as sp
@@ -25,15 +26,20 @@ def eval():
     return
 
 def main():
-    parser = OptionParser(usage="usage: %prog [options] file", version="%prog 0.1")
-    # parser.add_option("-t", "--template", action="store", type="string", dest="template",
+    parser = OptionParser(usage="usage: %prog [options] file",
+                          version="%prog 0.1")
+    # parser.add_option("-t", "--template",
+    #                   action="store", type="string", dest="template",
     #                   help="declare output format")
-    parser.add_option("-s", "--separator", action="store", type="string", dest="separator",
-                      help="seperator in the output file [defualt = ' ']", default=' ')
+    parser.add_option("-s", "--separator",
+                      action="store", type="string", dest="separator",
+                      help="seperator in the output file [defualt = ' ']",
+                      default=' ')
 
     (options, args) = parser.parse_args()
     if len(args) != 1:
         parser.error("incorrect number of arguments")
+
     data = np.loadtxt(args[0])
     #with open(args[0]) as fd:
     #    data2 = np.fromfile(fd, sep='\n', dtype=float)
@@ -76,13 +82,13 @@ def main():
     dn, dmin_max, dmean, dvar, dskew, dkurt = stats.describe(data)
     dstd = math.sqrt(dvar)
 
-    print('dn                 : {}'.format(dn))
-    print('dmin_max           : {}'.format(dmin_max))
-    print('dmean              : {}'.format(dmean))
-    print('dvariance          : {}'.format(dvar))
-    print('dstandard deviation: {}'.format(dstd))
-    print('dskew              : {}'.format(dskew))
-    print('dkurt    : {}'.format(dkurt))
+    # print('dn                 : {}'.format(dn))
+    # print('dmin_max           : {}'.format(dmin_max))
+    # print('dmean              : {}'.format(dmean))
+    # print('dvariance          : {}'.format(dvar))
+    # print('dstandard deviation: {}'.format(dstd))
+    # print('dskew              : {}'.format(dskew))
+    # print('dkurt    : {}'.format(dkurt))
 
 
 if __name__ == "__main__":

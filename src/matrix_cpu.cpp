@@ -51,25 +51,25 @@ matrix_type actor_multiply(const matrix_type& lhs, const matrix_type& rhs, size_
     matrix_type result(size * size);
     for (size_t row = 0; row < size; ++row) {
         for (size_t column = 0; column < size; ++column) {
-            spawn<monitored>([&,row,column, size] {
+            spawn([&,row,column, size] {
                 get(result, size, column, row) = dot_product(lhs, rhs, size, column, row);
             });
         }
     }
-    await_all_others_done();
+    await_all_actors_done();
     return std::move(result);
 }
 
 matrix_type actor_multiply2(const matrix_type& lhs, const matrix_type& rhs, size_t size) {
     matrix_type result(size * size);
     for (size_t row = 0; row < size; ++row) {
-        spawn<monitored>([&,row, size] {
+        spawn([&,row, size] {
             for (size_t column = 0; column < size; ++column) {
                 get(result, size, column, row) = dot_product(lhs, rhs, size, column, row);
             }
         });
     }
-    await_all_others_done();
+    await_all_actors_done();
     return std::move(result);
 }
 

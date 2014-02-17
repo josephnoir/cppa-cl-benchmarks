@@ -20,15 +20,15 @@ class copy_guy : public event_based_actor {
 
     copy_guy(size_t iterations,
              size_t size,
-             actor_ptr worker)
+             actor  worker)
         : m_count(0)
         , m_iterations(iterations)
         , m_size(size)
         , m_worker(worker)
     { }
 
-    void init() {
-        become(
+    behavior make_behavior() override {
+        return {
             on(atom("calc")) >> [=] {
                 vector<float> m1(m_size * m_size * m_size);
 
@@ -39,16 +39,16 @@ class copy_guy : public event_based_actor {
             },
             on_arg_match >> [=] (const vector<float>&) {
                 if (m_count >= m_iterations) {
-                    self->quit();
+                    quit();
                 }
                 else {
-                    send(self, atom("calc"));
+                    send(this, atom("calc"));
                 }
             },
             others() >> [] {
                 cout << "unknown message!" << endl;
             }
-        );
+        };
     }
 
  private:
@@ -56,32 +56,34 @@ class copy_guy : public event_based_actor {
     size_t m_count;
     size_t m_iterations;
     size_t m_size;
-    actor_ptr m_worker;
+    actor  m_worker;
 
 };
 
 
 int main(int argc, char** argv) {
-    size_t size = 0;
-    size_t iterations  = 1;
-    options_description desc;
-    bool args_valid = match_stream<string>(argv + 1, argv + argc) (
-        on_opt0('h', "help",       &desc, "print this text"               )
-            >> print_desc_and_exit(&desc),
-        on_opt1('s', "size",       &desc, "set matrix size (must be >= 0)")
-            >> rd_arg(size),
-        on_opt1('i', "iterations", &desc, "iterations (default: 1)")
-            >> rd_arg(iterations)
-    );
-    if (!args_valid || size <= 0) print_desc_and_exit(&desc)();
-    announce<vector<float>>();
-    auto prog = opencl::program::create(kernel_source, 0);
-    auto worker = spawn_cl<float*(float*)>(prog,
-                                           kernel_name8,
-                                           {size, size, size});
-    auto cpy = spawn<copy_guy>(iterations, size, worker);
-    send(cpy, atom("calc"));
-
-    await_all_others_done();
+    {
+        scoped_actor self;
+        size_t size = 0;
+        size_t iterations  = 1;
+        options_description desc;
+        bool args_valid = match_stream<string>(argv + 1, argv + argc) (
+            on_opt0('h', "help",       &desc, "print this text"               )
+                >> print_desc_and_exit(&desc),
+            on_opt1('s', "size",       &desc, "set matrix size (must be >= 0)")
+                >> rd_arg(size),
+            on_opt1('i', "iterations", &desc, "iterations (default: 1)")
+                >> rd_arg(iterations)
+        );
+        if (!args_valid || size <= 0) print_desc_and_exit(&desc)();
+        announce<vector<float>>();
+        auto prog = opencl::program::create(kernel_source, 0);
+        auto worker = spawn_cl<float*(float*)>(prog,
+                                               kernel_name8,
+                                               {size, size, size});
+        auto cpy = spawn<copy_guy>(iterations, size, worker);
+        self->send(cpy, atom("calc"));
+    }
+    await_all_actors_done();
     shutdown();
 }
